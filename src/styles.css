@@ -1,0 +1,175 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #070706;
+  --color-bg-elevated: #11100c;
+  --color-surface: #17150f;
+  --color-surface-2: #1e1b14;
+  --color-fg: #f4f0e6;
+  --color-muted: #b7afa0;
+  --color-subtle: #8d8578;
+  --color-gold: #c5a46a;
+  --color-gold-deep: #a8884c;
+  --color-gold-fg: #14120c;
+  --color-border: color-mix(in oklab, var(--color-gold) 30%, transparent);
+  --color-line: color-mix(in oklab, var(--color-fg) 10%, transparent);
+  --color-success: #6fbf7a;
+  --color-danger: #e06b63;
+
+  --font-sans: "Cairo", "Segoe UI", Tahoma, sans-serif;
+  --font-display: "El Messiri", "Cairo", "Segoe UI", sans-serif;
+
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-2xl: 1.75rem;
+
+  --shadow-border:
+    0 0 0 1px color-mix(in oklab, var(--color-gold) 22%, transparent);
+  --shadow-border-hover:
+    0 0 0 1px color-mix(in oklab, var(--color-gold) 48%, transparent),
+    0 18px 40px -24px color-mix(in oklab, var(--color-gold) 40%, transparent);
+  --shadow-glow:
+    0 0 28px -8px color-mix(in oklab, var(--color-gold) 55%, transparent);
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  section[id] {
+    scroll-margin-top: 5.5rem;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--color-gold) 35%, transparent);
+    color: var(--color-fg);
+  }
+}
+
+@layer components {
+  .glass-card {
+    background: color-mix(in oklab, var(--color-surface) 78%, transparent);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-border);
+  }
+
+  .gold-rule {
+    height: 1px;
+    width: 3.5rem;
+    background: color-mix(in oklab, var(--color-gold) 70%, transparent);
+  }
+
+  .hero-glow {
+    position: absolute;
+    inset: 12% 8%;
+    background: radial-gradient(
+      ellipse at 50% 40%,
+      color-mix(in oklab, var(--color-gold) 16%, transparent),
+      transparent 68%
+    );
+    filter: blur(28px);
+    pointer-events: none;
+  }
+
+  .hero-portrait-wrap {
+    position: relative;
+  }
+
+  .hero-portrait-wrap img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    object-position: center 10%;
+    mix-blend-mode: lighten;
+  }
+
+  .hero-portrait-wrap::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(to top, var(--color-bg) 0%, transparent 22%),
+      linear-gradient(to bottom, var(--color-bg) 0%, transparent 10%);
+  }
+
+  @media (min-width: 768px) {
+    .hero-portrait-wrap::after {
+      background:
+        linear-gradient(to top, var(--color-bg) 0%, transparent 28%),
+        linear-gradient(to bottom, var(--color-bg) 0%, transparent 10%),
+        linear-gradient(to right, transparent 52%, var(--color-bg) 100%);
+    }
+  }
+
+  .service-card {
+    transition:
+      transform 250ms cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 250ms cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 250ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  @media (hover: hover) {
+    .service-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-border-hover);
+      border-color: color-mix(in oklab, var(--color-gold) 55%, transparent);
+    }
+  }
+
+  .nav-glass {
+    background: color-mix(in oklab, var(--color-bg) 78%, transparent);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .hero-glow,
+  .service-card,
+  .reveal-in,
+  .reveal-out {
+    filter: none !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+}
